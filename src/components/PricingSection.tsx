@@ -13,20 +13,36 @@ const PricingSection = () => {
             Fair Pricing, Tailored to Your Resort
           </h2>
           
-          <div className="max-w-4xl mx-auto space-y-6 text-lg text-muted-foreground leading-relaxed">
-            <p>
-              Every resort is unique — so your pricing should be too. Our AI Concierge Chatbots are priced based on your resort's size, annual visitor volume, and the complexity of your guest experience. This ensures you pay only for the value you receive, not a one-size-fits-all rate.
-            </p>
-            
-            <p>
+          <div className="max-w-4xl mx-auto space-y-8">
+            <div className="space-y-6 text-lg text-muted-foreground leading-relaxed">
+              <p>
+                Every resort is unique — so your pricing should be too. Our AI Concierge Chatbots are priced based on your resort's size, annual visitor volume, and the complexity of your guest experience. This ensures you pay only for the value you receive, not a one-size-fits-all rate.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+              <div className="bg-background/50 backdrop-blur-sm border border-border rounded-lg p-6 space-y-2">
+                <h3 className="text-2xl font-bold text-foreground">Setup Fee</h3>
+                <p className="text-3xl font-bold text-primary">Starting from $1,000</p>
+                <p className="text-sm text-muted-foreground">
+                  Price may increase for resorts with higher client volume or complex requirements
+                </p>
+              </div>
+
+              <div className="bg-background/50 backdrop-blur-sm border border-border rounded-lg p-6 space-y-2">
+                <h3 className="text-2xl font-bold text-foreground">Monthly Maintenance</h3>
+                <p className="text-3xl font-bold text-primary">Starting from $100/month</p>
+                <p className="text-sm text-muted-foreground">
+                  + $100 for every additional 1,000 chats/conversations
+                </p>
+              </div>
+            </div>
+
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Our goal is to provide premium-quality automation at a fair cost — whether you're a small boutique hotel or a world-class resort welcoming thousands of guests each season.
             </p>
             
-            <p>
-              Pricing scales with your property's needs — from simple FAQ and lead capture chatbots to advanced multilingual concierge systems.
-            </p>
-            
-            <p className="font-semibold text-foreground">
+            <p className="font-semibold text-foreground text-lg">
               No hidden fees. No long-term commitments. Just results.
             </p>
           </div>
