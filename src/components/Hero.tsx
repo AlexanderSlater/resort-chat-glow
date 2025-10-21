@@ -41,7 +41,7 @@ const Hero = () => {
               onClick={scrollToContact}
               className="text-lg px-8 py-6 h-auto"
             >
-              Request Your Free Demo
+              Book a Free Consultation
             </Button>
             <Button 
               size="lg" 

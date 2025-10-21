@@ -25,7 +25,7 @@ const PricingSection = () => {
               <h3 className="text-2xl font-bold text-card-foreground mb-2">Setup Fee</h3>
               <div className="flex items-baseline justify-center gap-2">
                 <span className="text-sm text-muted-foreground">from</span>
-                <span className="text-5xl font-bold text-foreground">$300</span>
+                <span className="text-5xl font-bold text-foreground">$200</span>
               </div>
               <p className="text-muted-foreground mt-2">One-time customization</p>
             </div>
@@ -55,7 +55,7 @@ const PricingSection = () => {
               <h3 className="text-2xl font-bold mb-2">Monthly Maintenance</h3>
               <div className="flex items-baseline justify-center gap-2">
                 <span className="text-sm opacity-90">from</span>
-                <span className="text-5xl font-bold">$50</span>
+                <span className="text-5xl font-bold">$200</span>
               </div>
               <p className="opacity-90 mt-2">Optional ongoing support</p>
             </div>

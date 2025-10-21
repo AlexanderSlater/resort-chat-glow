@@ -1,4 +1,4 @@
-import { TrendingUp, MessageCircle, Globe, Zap } from "lucide-react";
+import { TrendingUp, MessageCircle, Globe, Zap, PhoneOff, Target } from "lucide-react";
 
 const ResultsSection = () => {
   const stats = [
@@ -13,6 +13,18 @@ const ResultsSection = () => {
       value: "80%",
       label: "Common questions handled",
       description: "Most inquiries resolved instantly without staff"
+    },
+    {
+      icon: PhoneOff,
+      value: "60%",
+      label: "Fewer calls and emails",
+      description: "Reduce staff workload with automated responses"
+    },
+    {
+      icon: Target,
+      value: "35%",
+      label: "More conversions",
+      description: "Turn website visitors into confirmed bookings"
     },
     {
       icon: Globe,
@@ -40,7 +52,7 @@ const ResultsSection = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {stats.map((stat, index) => (
             <div 
               key={index}
