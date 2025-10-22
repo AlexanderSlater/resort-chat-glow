@@ -3,7 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Mail, MessageSquare, Phone } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Mail, MessageSquare } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 const ContactSection = () => {
@@ -11,6 +12,8 @@ const ContactSection = () => {
     name: "",
     resortName: "",
     email: "",
+    countryCode: "+1",
+    phone: "",
     message: ""
   });
 
@@ -40,6 +43,8 @@ const ContactSection = () => {
       name: "",
       resortName: "",
       email: "",
+      countryCode: "+1",
+      phone: "",
       message: ""
     });
   };
@@ -100,12 +105,51 @@ const ContactSection = () => {
               </div>
 
               <div>
+                <Label htmlFor="phone">Phone Number</Label>
+                <div className="flex gap-2 mt-2">
+                  <Select 
+                    value={formData.countryCode} 
+                    onValueChange={(value) => setFormData({ ...formData, countryCode: value })}
+                  >
+                    <SelectTrigger className="w-[120px]">
+                      <SelectValue placeholder="Code" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="+1">🇺🇸 +1</SelectItem>
+                      <SelectItem value="+44">🇬🇧 +44</SelectItem>
+                      <SelectItem value="+33">🇫🇷 +33</SelectItem>
+                      <SelectItem value="+49">🇩🇪 +49</SelectItem>
+                      <SelectItem value="+34">🇪🇸 +34</SelectItem>
+                      <SelectItem value="+39">🇮🇹 +39</SelectItem>
+                      <SelectItem value="+81">🇯🇵 +81</SelectItem>
+                      <SelectItem value="+86">🇨🇳 +86</SelectItem>
+                      <SelectItem value="+91">🇮🇳 +91</SelectItem>
+                      <SelectItem value="+61">🇦🇺 +61</SelectItem>
+                      <SelectItem value="+55">🇧🇷 +55</SelectItem>
+                      <SelectItem value="+52">🇲🇽 +52</SelectItem>
+                      <SelectItem value="+7">🇷🇺 +7</SelectItem>
+                      <SelectItem value="+82">🇰🇷 +82</SelectItem>
+                      <SelectItem value="+971">🇦🇪 +971</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="123 456 7890"
+                    className="flex-1"
+                  />
+                </div>
+              </div>
+
+              <div>
                 <Label htmlFor="message">Message *</Label>
                 <Textarea
                   id="message"
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Tell us about your resort and what you're looking for..."
+                  placeholder="Share your resort's website and tell us more about your needs. Are you interested in the Standard plan or would you prefer a custom Enterprise solution?"
                   required
                   className="mt-2 min-h-[120px]"
                 />
@@ -128,8 +172,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-card-foreground mb-1">Email</div>
-                    <a href="mailto:hello@resortchatbot.com" className="text-muted-foreground hover:text-accent transition-colors">
-                      hello@resortchatbot.com
+                    <a href="mailto:hello@terelight.com" className="text-muted-foreground hover:text-accent transition-colors">
+                      hello@terelight.com
                     </a>
                   </div>
                 </div>
@@ -141,18 +185,6 @@ const ContactSection = () => {
                   <div>
                     <div className="font-semibold text-card-foreground mb-1">WhatsApp</div>
                     <a href="https://wa.me/1234567890" className="text-muted-foreground hover:text-accent transition-colors">
-                      +1 (234) 567-890
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-6 h-6 text-accent" />
-                  </div>
-                  <div>
-                    <div className="font-semibold text-card-foreground mb-1">Phone</div>
-                    <a href="tel:+1234567890" className="text-muted-foreground hover:text-accent transition-colors">
                       +1 (234) 567-890
                     </a>
                   </div>

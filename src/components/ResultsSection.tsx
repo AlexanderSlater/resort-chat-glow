@@ -28,13 +28,13 @@ const ResultsSection = () => {
     },
     {
       icon: Globe,
-      value: "10+",
+      value: "75+",
       label: "Languages supported",
       description: "Communicate with international guests effortlessly"
     },
     {
       icon: Zap,
-      value: "<10s",
+      value: "<3s",
       label: "Average response time",
       description: "Lightning-fast answers keep guests engaged"
     }
