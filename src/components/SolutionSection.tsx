@@ -14,8 +14,8 @@ const SolutionSection = () => {
     },
     {
       icon: Zap,
-      title: "Quick Lead Capture",
-      description: "Automatically collect guest information and booking inquiries while maintaining a natural conversation flow."
+      title: "Booking Automation",
+      description: "Streamline reservations by guiding guests through availability checks and booking processes automatically."
     },
     {
       icon: Shield,
