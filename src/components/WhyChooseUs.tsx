@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Award, Palette, DollarSign, Users } from "lucide-react";
+import { Zap, Palette, TrendingUp, Users } from "lucide-react";
 
 const WhyChooseUs = () => {
   const reasons = [
@@ -9,9 +9,9 @@ const WhyChooseUs = () => {
       description: "Tailored to match your resort's unique brand, tone of voice, and specific requirements."
     },
     {
-      icon: DollarSign,
-      title: "Transparent Pricing",
-      description: "Simple, affordable rates with no hidden costs or surprise fees. Cancel anytime."
+      icon: Zap,
+      title: "Fast Implementation",
+      description: "Get up and running in days, not months. Quick deployment with minimal disruption to your operations."
     },
     {
       icon: Users,
@@ -19,9 +19,9 @@ const WhyChooseUs = () => {
       description: "Built and managed by real professionals who understand hospitality and technology."
     },
     {
-      icon: Award,
-      title: "Premium Quality",
-      description: "Enterprise-grade solution without enterprise pricing — designed for luxury resorts."
+      icon: TrendingUp,
+      title: "Proven Results",
+      description: "Increase engagement by 40%, reduce staff workload by 60%, and boost conversions by 35%."
     }
   ];
 
