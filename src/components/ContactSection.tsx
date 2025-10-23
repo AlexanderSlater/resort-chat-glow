@@ -3,9 +3,174 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Mail, MessageSquare } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Mail, MessageSquare, Check, ChevronsUpDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
+
+const countryCodes = [
+  { value: "+93", label: "🇦🇫 +93 Afghanistan" },
+  { value: "+355", label: "🇦🇱 +355 Albania" },
+  { value: "+213", label: "🇩🇿 +213 Algeria" },
+  { value: "+376", label: "🇦🇩 +376 Andorra" },
+  { value: "+244", label: "🇦🇴 +244 Angola" },
+  { value: "+54", label: "🇦🇷 +54 Argentina" },
+  { value: "+374", label: "🇦🇲 +374 Armenia" },
+  { value: "+61", label: "🇦🇺 +61 Australia" },
+  { value: "+43", label: "🇦🇹 +43 Austria" },
+  { value: "+994", label: "🇦🇿 +994 Azerbaijan" },
+  { value: "+973", label: "🇧🇭 +973 Bahrain" },
+  { value: "+880", label: "🇧🇩 +880 Bangladesh" },
+  { value: "+375", label: "🇧🇾 +375 Belarus" },
+  { value: "+32", label: "🇧🇪 +32 Belgium" },
+  { value: "+501", label: "🇧🇿 +501 Belize" },
+  { value: "+229", label: "🇧🇯 +229 Benin" },
+  { value: "+975", label: "🇧🇹 +975 Bhutan" },
+  { value: "+591", label: "🇧🇴 +591 Bolivia" },
+  { value: "+387", label: "🇧🇦 +387 Bosnia" },
+  { value: "+267", label: "🇧🇼 +267 Botswana" },
+  { value: "+55", label: "🇧🇷 +55 Brazil" },
+  { value: "+673", label: "🇧🇳 +673 Brunei" },
+  { value: "+359", label: "🇧🇬 +359 Bulgaria" },
+  { value: "+226", label: "🇧🇫 +226 Burkina Faso" },
+  { value: "+257", label: "🇧🇮 +257 Burundi" },
+  { value: "+855", label: "🇰🇭 +855 Cambodia" },
+  { value: "+237", label: "🇨🇲 +237 Cameroon" },
+  { value: "+1", label: "🇨🇦 +1 Canada" },
+  { value: "+238", label: "🇨🇻 +238 Cape Verde" },
+  { value: "+236", label: "🇨🇫 +236 Central African Republic" },
+  { value: "+235", label: "🇹🇩 +235 Chad" },
+  { value: "+56", label: "🇨🇱 +56 Chile" },
+  { value: "+86", label: "🇨🇳 +86 China" },
+  { value: "+57", label: "🇨🇴 +57 Colombia" },
+  { value: "+269", label: "🇰🇲 +269 Comoros" },
+  { value: "+506", label: "🇨🇷 +506 Costa Rica" },
+  { value: "+385", label: "🇭🇷 +385 Croatia" },
+  { value: "+53", label: "🇨🇺 +53 Cuba" },
+  { value: "+357", label: "🇨🇾 +357 Cyprus" },
+  { value: "+420", label: "🇨🇿 +420 Czech Republic" },
+  { value: "+45", label: "🇩🇰 +45 Denmark" },
+  { value: "+253", label: "🇩🇯 +253 Djibouti" },
+  { value: "+593", label: "🇪🇨 +593 Ecuador" },
+  { value: "+20", label: "🇪🇬 +20 Egypt" },
+  { value: "+503", label: "🇸🇻 +503 El Salvador" },
+  { value: "+372", label: "🇪🇪 +372 Estonia" },
+  { value: "+251", label: "🇪🇹 +251 Ethiopia" },
+  { value: "+679", label: "🇫🇯 +679 Fiji" },
+  { value: "+358", label: "🇫🇮 +358 Finland" },
+  { value: "+33", label: "🇫🇷 +33 France" },
+  { value: "+241", label: "🇬🇦 +241 Gabon" },
+  { value: "+220", label: "🇬🇲 +220 Gambia" },
+  { value: "+995", label: "🇬🇪 +995 Georgia" },
+  { value: "+49", label: "🇩🇪 +49 Germany" },
+  { value: "+233", label: "🇬🇭 +233 Ghana" },
+  { value: "+30", label: "🇬🇷 +30 Greece" },
+  { value: "+502", label: "🇬🇹 +502 Guatemala" },
+  { value: "+224", label: "🇬🇳 +224 Guinea" },
+  { value: "+592", label: "🇬🇾 +592 Guyana" },
+  { value: "+509", label: "🇭🇹 +509 Haiti" },
+  { value: "+504", label: "🇭🇳 +504 Honduras" },
+  { value: "+852", label: "🇭🇰 +852 Hong Kong" },
+  { value: "+36", label: "🇭🇺 +36 Hungary" },
+  { value: "+354", label: "🇮🇸 +354 Iceland" },
+  { value: "+91", label: "🇮🇳 +91 India" },
+  { value: "+62", label: "🇮🇩 +62 Indonesia" },
+  { value: "+98", label: "🇮🇷 +98 Iran" },
+  { value: "+964", label: "🇮🇶 +964 Iraq" },
+  { value: "+353", label: "🇮🇪 +353 Ireland" },
+  { value: "+972", label: "🇮🇱 +972 Israel" },
+  { value: "+39", label: "🇮🇹 +39 Italy" },
+  { value: "+225", label: "🇨🇮 +225 Ivory Coast" },
+  { value: "+81", label: "🇯🇵 +81 Japan" },
+  { value: "+962", label: "🇯🇴 +962 Jordan" },
+  { value: "+7", label: "🇰🇿 +7 Kazakhstan" },
+  { value: "+254", label: "🇰🇪 +254 Kenya" },
+  { value: "+965", label: "🇰🇼 +965 Kuwait" },
+  { value: "+996", label: "🇰🇬 +996 Kyrgyzstan" },
+  { value: "+856", label: "🇱🇦 +856 Laos" },
+  { value: "+371", label: "🇱🇻 +371 Latvia" },
+  { value: "+961", label: "🇱🇧 +961 Lebanon" },
+  { value: "+231", label: "🇱🇷 +231 Liberia" },
+  { value: "+218", label: "🇱🇾 +218 Libya" },
+  { value: "+370", label: "🇱🇹 +370 Lithuania" },
+  { value: "+352", label: "🇱🇺 +352 Luxembourg" },
+  { value: "+261", label: "🇲🇬 +261 Madagascar" },
+  { value: "+60", label: "🇲🇾 +60 Malaysia" },
+  { value: "+960", label: "🇲🇻 +960 Maldives" },
+  { value: "+223", label: "🇲🇱 +223 Mali" },
+  { value: "+356", label: "🇲🇹 +356 Malta" },
+  { value: "+222", label: "🇲🇷 +222 Mauritania" },
+  { value: "+230", label: "🇲🇺 +230 Mauritius" },
+  { value: "+52", label: "🇲🇽 +52 Mexico" },
+  { value: "+373", label: "🇲🇩 +373 Moldova" },
+  { value: "+377", label: "🇲🇨 +377 Monaco" },
+  { value: "+976", label: "🇲🇳 +976 Mongolia" },
+  { value: "+382", label: "🇲🇪 +382 Montenegro" },
+  { value: "+212", label: "🇲🇦 +212 Morocco" },
+  { value: "+258", label: "🇲🇿 +258 Mozambique" },
+  { value: "+95", label: "🇲🇲 +95 Myanmar" },
+  { value: "+264", label: "🇳🇦 +264 Namibia" },
+  { value: "+977", label: "🇳🇵 +977 Nepal" },
+  { value: "+31", label: "🇳🇱 +31 Netherlands" },
+  { value: "+64", label: "🇳🇿 +64 New Zealand" },
+  { value: "+505", label: "🇳🇮 +505 Nicaragua" },
+  { value: "+227", label: "🇳🇪 +227 Niger" },
+  { value: "+234", label: "🇳🇬 +234 Nigeria" },
+  { value: "+850", label: "🇰🇵 +850 North Korea" },
+  { value: "+389", label: "🇲🇰 +389 North Macedonia" },
+  { value: "+47", label: "🇳🇴 +47 Norway" },
+  { value: "+968", label: "🇴🇲 +968 Oman" },
+  { value: "+92", label: "🇵🇰 +92 Pakistan" },
+  { value: "+970", label: "🇵🇸 +970 Palestine" },
+  { value: "+507", label: "🇵🇦 +507 Panama" },
+  { value: "+595", label: "🇵🇾 +595 Paraguay" },
+  { value: "+51", label: "🇵🇪 +51 Peru" },
+  { value: "+63", label: "🇵🇭 +63 Philippines" },
+  { value: "+48", label: "🇵🇱 +48 Poland" },
+  { value: "+351", label: "🇵🇹 +351 Portugal" },
+  { value: "+974", label: "🇶🇦 +974 Qatar" },
+  { value: "+40", label: "🇷🇴 +40 Romania" },
+  { value: "+7", label: "🇷🇺 +7 Russia" },
+  { value: "+250", label: "🇷🇼 +250 Rwanda" },
+  { value: "+966", label: "🇸🇦 +966 Saudi Arabia" },
+  { value: "+221", label: "🇸🇳 +221 Senegal" },
+  { value: "+381", label: "🇷🇸 +381 Serbia" },
+  { value: "+248", label: "🇸🇨 +248 Seychelles" },
+  { value: "+65", label: "🇸🇬 +65 Singapore" },
+  { value: "+421", label: "🇸🇰 +421 Slovakia" },
+  { value: "+386", label: "🇸🇮 +386 Slovenia" },
+  { value: "+27", label: "🇿🇦 +27 South Africa" },
+  { value: "+82", label: "🇰🇷 +82 South Korea" },
+  { value: "+211", label: "🇸🇸 +211 South Sudan" },
+  { value: "+34", label: "🇪🇸 +34 Spain" },
+  { value: "+94", label: "🇱🇰 +94 Sri Lanka" },
+  { value: "+249", label: "🇸🇩 +249 Sudan" },
+  { value: "+46", label: "🇸🇪 +46 Sweden" },
+  { value: "+41", label: "🇨🇭 +41 Switzerland" },
+  { value: "+963", label: "🇸🇾 +963 Syria" },
+  { value: "+886", label: "🇹🇼 +886 Taiwan" },
+  { value: "+992", label: "🇹🇯 +992 Tajikistan" },
+  { value: "+255", label: "🇹🇿 +255 Tanzania" },
+  { value: "+66", label: "🇹🇭 +66 Thailand" },
+  { value: "+228", label: "🇹🇬 +228 Togo" },
+  { value: "+216", label: "🇹🇳 +216 Tunisia" },
+  { value: "+90", label: "🇹🇷 +90 Turkey" },
+  { value: "+993", label: "🇹🇲 +993 Turkmenistan" },
+  { value: "+256", label: "🇺🇬 +256 Uganda" },
+  { value: "+380", label: "🇺🇦 +380 Ukraine" },
+  { value: "+971", label: "🇦🇪 +971 UAE" },
+  { value: "+44", label: "🇬🇧 +44 United Kingdom" },
+  { value: "+1", label: "🇺🇸 +1 United States" },
+  { value: "+598", label: "🇺🇾 +598 Uruguay" },
+  { value: "+998", label: "🇺🇿 +998 Uzbekistan" },
+  { value: "+58", label: "🇻🇪 +58 Venezuela" },
+  { value: "+84", label: "🇻🇳 +84 Vietnam" },
+  { value: "+967", label: "🇾🇪 +967 Yemen" },
+  { value: "+260", label: "🇿🇲 +260 Zambia" },
+  { value: "+263", label: "🇿🇼 +263 Zimbabwe" },
+  { value: "other", label: "Other (enter manually)" },
+];
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -16,6 +181,7 @@ const ContactSection = () => {
     phone: "",
     message: ""
   });
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -109,176 +275,49 @@ const ContactSection = () => {
                 <div className="flex gap-2 mt-2">
                   {formData.countryCode !== "other" ? (
                     <>
-                      <Select 
-                        value={formData.countryCode} 
-                        onValueChange={(value) => setFormData({ ...formData, countryCode: value })}
-                      >
-                        <SelectTrigger className="w-[140px]">
-                          <SelectValue placeholder="Code" />
-                        </SelectTrigger>
-                        <SelectContent className="max-h-[300px]">
-                          <SelectItem value="+93">🇦🇫 +93 (Afghanistan)</SelectItem>
-                          <SelectItem value="+355">🇦🇱 +355 (Albania)</SelectItem>
-                          <SelectItem value="+213">🇩🇿 +213 (Algeria)</SelectItem>
-                          <SelectItem value="+376">🇦🇩 +376 (Andorra)</SelectItem>
-                          <SelectItem value="+244">🇦🇴 +244 (Angola)</SelectItem>
-                          <SelectItem value="+54">🇦🇷 +54 (Argentina)</SelectItem>
-                          <SelectItem value="+374">🇦🇲 +374 (Armenia)</SelectItem>
-                          <SelectItem value="+61">🇦🇺 +61 (Australia)</SelectItem>
-                          <SelectItem value="+43">🇦🇹 +43 (Austria)</SelectItem>
-                          <SelectItem value="+994">🇦🇿 +994 (Azerbaijan)</SelectItem>
-                          <SelectItem value="+973">🇧🇭 +973 (Bahrain)</SelectItem>
-                          <SelectItem value="+880">🇧🇩 +880 (Bangladesh)</SelectItem>
-                          <SelectItem value="+375">🇧🇾 +375 (Belarus)</SelectItem>
-                          <SelectItem value="+32">🇧🇪 +32 (Belgium)</SelectItem>
-                          <SelectItem value="+501">🇧🇿 +501 (Belize)</SelectItem>
-                          <SelectItem value="+229">🇧🇯 +229 (Benin)</SelectItem>
-                          <SelectItem value="+975">🇧🇹 +975 (Bhutan)</SelectItem>
-                          <SelectItem value="+591">🇧🇴 +591 (Bolivia)</SelectItem>
-                          <SelectItem value="+387">🇧🇦 +387 (Bosnia)</SelectItem>
-                          <SelectItem value="+267">🇧🇼 +267 (Botswana)</SelectItem>
-                          <SelectItem value="+55">🇧🇷 +55 (Brazil)</SelectItem>
-                          <SelectItem value="+673">🇧🇳 +673 (Brunei)</SelectItem>
-                          <SelectItem value="+359">🇧🇬 +359 (Bulgaria)</SelectItem>
-                          <SelectItem value="+226">🇧🇫 +226 (Burkina Faso)</SelectItem>
-                          <SelectItem value="+257">🇧🇮 +257 (Burundi)</SelectItem>
-                          <SelectItem value="+855">🇰🇭 +855 (Cambodia)</SelectItem>
-                          <SelectItem value="+237">🇨🇲 +237 (Cameroon)</SelectItem>
-                          <SelectItem value="+1">🇨🇦 +1 (Canada)</SelectItem>
-                          <SelectItem value="+238">🇨🇻 +238 (Cape Verde)</SelectItem>
-                          <SelectItem value="+236">🇨🇫 +236 (Central African Republic)</SelectItem>
-                          <SelectItem value="+235">🇹🇩 +235 (Chad)</SelectItem>
-                          <SelectItem value="+56">🇨🇱 +56 (Chile)</SelectItem>
-                          <SelectItem value="+86">🇨🇳 +86 (China)</SelectItem>
-                          <SelectItem value="+57">🇨🇴 +57 (Colombia)</SelectItem>
-                          <SelectItem value="+269">🇰🇲 +269 (Comoros)</SelectItem>
-                          <SelectItem value="+506">🇨🇷 +506 (Costa Rica)</SelectItem>
-                          <SelectItem value="+385">🇭🇷 +385 (Croatia)</SelectItem>
-                          <SelectItem value="+53">🇨🇺 +53 (Cuba)</SelectItem>
-                          <SelectItem value="+357">🇨🇾 +357 (Cyprus)</SelectItem>
-                          <SelectItem value="+420">🇨🇿 +420 (Czech Republic)</SelectItem>
-                          <SelectItem value="+45">🇩🇰 +45 (Denmark)</SelectItem>
-                          <SelectItem value="+253">🇩🇯 +253 (Djibouti)</SelectItem>
-                          <SelectItem value="+593">🇪🇨 +593 (Ecuador)</SelectItem>
-                          <SelectItem value="+20">🇪🇬 +20 (Egypt)</SelectItem>
-                          <SelectItem value="+503">🇸🇻 +503 (El Salvador)</SelectItem>
-                          <SelectItem value="+372">🇪🇪 +372 (Estonia)</SelectItem>
-                          <SelectItem value="+251">🇪🇹 +251 (Ethiopia)</SelectItem>
-                          <SelectItem value="+679">🇫🇯 +679 (Fiji)</SelectItem>
-                          <SelectItem value="+358">🇫🇮 +358 (Finland)</SelectItem>
-                          <SelectItem value="+33">🇫🇷 +33 (France)</SelectItem>
-                          <SelectItem value="+241">🇬🇦 +241 (Gabon)</SelectItem>
-                          <SelectItem value="+220">🇬🇲 +220 (Gambia)</SelectItem>
-                          <SelectItem value="+995">🇬🇪 +995 (Georgia)</SelectItem>
-                          <SelectItem value="+49">🇩🇪 +49 (Germany)</SelectItem>
-                          <SelectItem value="+233">🇬🇭 +233 (Ghana)</SelectItem>
-                          <SelectItem value="+30">🇬🇷 +30 (Greece)</SelectItem>
-                          <SelectItem value="+502">🇬🇹 +502 (Guatemala)</SelectItem>
-                          <SelectItem value="+224">🇬🇳 +224 (Guinea)</SelectItem>
-                          <SelectItem value="+592">🇬🇾 +592 (Guyana)</SelectItem>
-                          <SelectItem value="+509">🇭🇹 +509 (Haiti)</SelectItem>
-                          <SelectItem value="+504">🇭🇳 +504 (Honduras)</SelectItem>
-                          <SelectItem value="+852">🇭🇰 +852 (Hong Kong)</SelectItem>
-                          <SelectItem value="+36">🇭🇺 +36 (Hungary)</SelectItem>
-                          <SelectItem value="+354">🇮🇸 +354 (Iceland)</SelectItem>
-                          <SelectItem value="+91">🇮🇳 +91 (India)</SelectItem>
-                          <SelectItem value="+62">🇮🇩 +62 (Indonesia)</SelectItem>
-                          <SelectItem value="+98">🇮🇷 +98 (Iran)</SelectItem>
-                          <SelectItem value="+964">🇮🇶 +964 (Iraq)</SelectItem>
-                          <SelectItem value="+353">🇮🇪 +353 (Ireland)</SelectItem>
-                          <SelectItem value="+972">🇮🇱 +972 (Israel)</SelectItem>
-                          <SelectItem value="+39">🇮🇹 +39 (Italy)</SelectItem>
-                          <SelectItem value="+225">🇨🇮 +225 (Ivory Coast)</SelectItem>
-                          <SelectItem value="+81">🇯🇵 +81 (Japan)</SelectItem>
-                          <SelectItem value="+962">🇯🇴 +962 (Jordan)</SelectItem>
-                          <SelectItem value="+7">🇰🇿 +7 (Kazakhstan)</SelectItem>
-                          <SelectItem value="+254">🇰🇪 +254 (Kenya)</SelectItem>
-                          <SelectItem value="+965">🇰🇼 +965 (Kuwait)</SelectItem>
-                          <SelectItem value="+996">🇰🇬 +996 (Kyrgyzstan)</SelectItem>
-                          <SelectItem value="+856">🇱🇦 +856 (Laos)</SelectItem>
-                          <SelectItem value="+371">🇱🇻 +371 (Latvia)</SelectItem>
-                          <SelectItem value="+961">🇱🇧 +961 (Lebanon)</SelectItem>
-                          <SelectItem value="+231">🇱🇷 +231 (Liberia)</SelectItem>
-                          <SelectItem value="+218">🇱🇾 +218 (Libya)</SelectItem>
-                          <SelectItem value="+370">🇱🇹 +370 (Lithuania)</SelectItem>
-                          <SelectItem value="+352">🇱🇺 +352 (Luxembourg)</SelectItem>
-                          <SelectItem value="+261">🇲🇬 +261 (Madagascar)</SelectItem>
-                          <SelectItem value="+60">🇲🇾 +60 (Malaysia)</SelectItem>
-                          <SelectItem value="+960">🇲🇻 +960 (Maldives)</SelectItem>
-                          <SelectItem value="+223">🇲🇱 +223 (Mali)</SelectItem>
-                          <SelectItem value="+356">🇲🇹 +356 (Malta)</SelectItem>
-                          <SelectItem value="+222">🇲🇷 +222 (Mauritania)</SelectItem>
-                          <SelectItem value="+230">🇲🇺 +230 (Mauritius)</SelectItem>
-                          <SelectItem value="+52">🇲🇽 +52 (Mexico)</SelectItem>
-                          <SelectItem value="+373">🇲🇩 +373 (Moldova)</SelectItem>
-                          <SelectItem value="+377">🇲🇨 +377 (Monaco)</SelectItem>
-                          <SelectItem value="+976">🇲🇳 +976 (Mongolia)</SelectItem>
-                          <SelectItem value="+382">🇲🇪 +382 (Montenegro)</SelectItem>
-                          <SelectItem value="+212">🇲🇦 +212 (Morocco)</SelectItem>
-                          <SelectItem value="+258">🇲🇿 +258 (Mozambique)</SelectItem>
-                          <SelectItem value="+95">🇲🇲 +95 (Myanmar)</SelectItem>
-                          <SelectItem value="+264">🇳🇦 +264 (Namibia)</SelectItem>
-                          <SelectItem value="+977">🇳🇵 +977 (Nepal)</SelectItem>
-                          <SelectItem value="+31">🇳🇱 +31 (Netherlands)</SelectItem>
-                          <SelectItem value="+64">🇳🇿 +64 (New Zealand)</SelectItem>
-                          <SelectItem value="+505">🇳🇮 +505 (Nicaragua)</SelectItem>
-                          <SelectItem value="+227">🇳🇪 +227 (Niger)</SelectItem>
-                          <SelectItem value="+234">🇳🇬 +234 (Nigeria)</SelectItem>
-                          <SelectItem value="+850">🇰🇵 +850 (North Korea)</SelectItem>
-                          <SelectItem value="+389">🇲🇰 +389 (North Macedonia)</SelectItem>
-                          <SelectItem value="+47">🇳🇴 +47 (Norway)</SelectItem>
-                          <SelectItem value="+968">🇴🇲 +968 (Oman)</SelectItem>
-                          <SelectItem value="+92">🇵🇰 +92 (Pakistan)</SelectItem>
-                          <SelectItem value="+970">🇵🇸 +970 (Palestine)</SelectItem>
-                          <SelectItem value="+507">🇵🇦 +507 (Panama)</SelectItem>
-                          <SelectItem value="+595">🇵🇾 +595 (Paraguay)</SelectItem>
-                          <SelectItem value="+51">🇵🇪 +51 (Peru)</SelectItem>
-                          <SelectItem value="+63">🇵🇭 +63 (Philippines)</SelectItem>
-                          <SelectItem value="+48">🇵🇱 +48 (Poland)</SelectItem>
-                          <SelectItem value="+351">🇵🇹 +351 (Portugal)</SelectItem>
-                          <SelectItem value="+974">🇶🇦 +974 (Qatar)</SelectItem>
-                          <SelectItem value="+40">🇷🇴 +40 (Romania)</SelectItem>
-                          <SelectItem value="+7">🇷🇺 +7 (Russia)</SelectItem>
-                          <SelectItem value="+250">🇷🇼 +250 (Rwanda)</SelectItem>
-                          <SelectItem value="+966">🇸🇦 +966 (Saudi Arabia)</SelectItem>
-                          <SelectItem value="+221">🇸🇳 +221 (Senegal)</SelectItem>
-                          <SelectItem value="+381">🇷🇸 +381 (Serbia)</SelectItem>
-                          <SelectItem value="+248">🇸🇨 +248 (Seychelles)</SelectItem>
-                          <SelectItem value="+65">🇸🇬 +65 (Singapore)</SelectItem>
-                          <SelectItem value="+421">🇸🇰 +421 (Slovakia)</SelectItem>
-                          <SelectItem value="+386">🇸🇮 +386 (Slovenia)</SelectItem>
-                          <SelectItem value="+27">🇿🇦 +27 (South Africa)</SelectItem>
-                          <SelectItem value="+82">🇰🇷 +82 (South Korea)</SelectItem>
-                          <SelectItem value="+211">🇸🇸 +211 (South Sudan)</SelectItem>
-                          <SelectItem value="+34">🇪🇸 +34 (Spain)</SelectItem>
-                          <SelectItem value="+94">🇱🇰 +94 (Sri Lanka)</SelectItem>
-                          <SelectItem value="+249">🇸🇩 +249 (Sudan)</SelectItem>
-                          <SelectItem value="+46">🇸🇪 +46 (Sweden)</SelectItem>
-                          <SelectItem value="+41">🇨🇭 +41 (Switzerland)</SelectItem>
-                          <SelectItem value="+963">🇸🇾 +963 (Syria)</SelectItem>
-                          <SelectItem value="+886">🇹🇼 +886 (Taiwan)</SelectItem>
-                          <SelectItem value="+992">🇹🇯 +992 (Tajikistan)</SelectItem>
-                          <SelectItem value="+255">🇹🇿 +255 (Tanzania)</SelectItem>
-                          <SelectItem value="+66">🇹🇭 +66 (Thailand)</SelectItem>
-                          <SelectItem value="+228">🇹🇬 +228 (Togo)</SelectItem>
-                          <SelectItem value="+216">🇹🇳 +216 (Tunisia)</SelectItem>
-                          <SelectItem value="+90">🇹🇷 +90 (Turkey)</SelectItem>
-                          <SelectItem value="+993">🇹🇲 +993 (Turkmenistan)</SelectItem>
-                          <SelectItem value="+256">🇺🇬 +256 (Uganda)</SelectItem>
-                          <SelectItem value="+380">🇺🇦 +380 (Ukraine)</SelectItem>
-                          <SelectItem value="+971">🇦🇪 +971 (UAE)</SelectItem>
-                          <SelectItem value="+44">🇬🇧 +44 (United Kingdom)</SelectItem>
-                          <SelectItem value="+1">🇺🇸 +1 (United States)</SelectItem>
-                          <SelectItem value="+598">🇺🇾 +598 (Uruguay)</SelectItem>
-                          <SelectItem value="+998">🇺🇿 +998 (Uzbekistan)</SelectItem>
-                          <SelectItem value="+58">🇻🇪 +58 (Venezuela)</SelectItem>
-                          <SelectItem value="+84">🇻🇳 +84 (Vietnam)</SelectItem>
-                          <SelectItem value="+967">🇾🇪 +967 (Yemen)</SelectItem>
-                          <SelectItem value="+260">🇿🇲 +260 (Zambia)</SelectItem>
-                          <SelectItem value="+263">🇿🇼 +263 (Zimbabwe)</SelectItem>
-                          <SelectItem value="other">Other (enter manually)</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Popover open={open} onOpenChange={setOpen}>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            aria-expanded={open}
+                            className="w-[180px] justify-between"
+                          >
+                            {formData.countryCode
+                              ? countryCodes.find((country) => country.value === formData.countryCode)?.label.split(' ')[0] + ' ' + formData.countryCode
+                              : "Select code..."}
+                            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-[300px] p-0" align="start">
+                          <Command>
+                            <CommandInput placeholder="Search country code..." />
+                            <CommandList>
+                              <CommandEmpty>No country found.</CommandEmpty>
+                              <CommandGroup>
+                                {countryCodes.map((country) => (
+                                  <CommandItem
+                                    key={country.value}
+                                    value={country.label}
+                                    onSelect={() => {
+                                      setFormData({ ...formData, countryCode: country.value });
+                                      setOpen(false);
+                                    }}
+                                  >
+                                    <Check
+                                      className={cn(
+                                        "mr-2 h-4 w-4",
+                                        formData.countryCode === country.value ? "opacity-100" : "opacity-0"
+                                      )}
+                                    />
+                                    {country.label}
+                                  </CommandItem>
+                                ))}
+                              </CommandGroup>
+                            </CommandList>
+                          </Command>
+                        </PopoverContent>
+                      </Popover>
                       <Input
                         id="phone"
                         type="tel"

@@ -33,8 +33,26 @@ const Header = () => {
               onClick={scrollToContact}
               className="text-foreground hover:text-primary transition-colors"
             >
-              Contact
+              Contact Us
             </button>
+            <a
+              href="#"
+              className="text-foreground hover:text-primary transition-colors"
+            >
+              Blog
+            </a>
+            <a
+              href="#"
+              className="text-foreground hover:text-primary transition-colors"
+            >
+              About Us
+            </a>
+            <a
+              href="#"
+              className="text-foreground hover:text-primary transition-colors"
+            >
+              Services
+            </a>
             <Button 
               onClick={scrollToContact}
               className="bg-gradient-primary text-primary-foreground hover:opacity-90"
@@ -61,8 +79,26 @@ const Header = () => {
                 onClick={scrollToContact}
                 className="text-foreground hover:text-primary transition-colors text-left"
               >
-                Contact
+                Contact Us
               </button>
+              <a
+                href="#"
+                className="text-foreground hover:text-primary transition-colors text-left"
+              >
+                Blog
+              </a>
+              <a
+                href="#"
+                className="text-foreground hover:text-primary transition-colors text-left"
+              >
+                About Us
+              </a>
+              <a
+                href="#"
+                className="text-foreground hover:text-primary transition-colors text-left"
+              >
+                Services
+              </a>
               <Button 
                 onClick={scrollToContact}
                 className="bg-gradient-primary text-primary-foreground hover:opacity-90 w-full"

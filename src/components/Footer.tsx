@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground py-12">
       <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-3 gap-8 mb-8">
+        <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
             <h3 className="text-2xl font-bold mb-3">ResortAI Concierge</h3>
@@ -26,12 +26,39 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#" className="hover:opacity-100 transition-opacity">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:opacity-100 transition-opacity">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:opacity-100 transition-opacity">
+                  Services
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Policy */}
+          <div>
+            <h4 className="font-semibold mb-3">Policy</h4>
+            <ul className="space-y-2 text-sm opacity-90">
+              <li>
+                <a href="#" className="hover:opacity-100 transition-opacity">
                   Privacy Policy
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:opacity-100 transition-opacity">
                   Terms of Service
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:opacity-100 transition-opacity">
+                  Refund & Cancellation Policy
                 </a>
               </li>
             </ul>
