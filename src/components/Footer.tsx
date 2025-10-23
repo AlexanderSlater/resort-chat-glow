@@ -43,8 +43,8 @@ const Footer = () => {
             <div className="space-y-2 text-sm opacity-90">
               <div className="flex items-center gap-2">
                 <Mail className="w-4 h-4" />
-                <a href="mailto:hello@terelight.com" className="hover:opacity-100 transition-opacity">
-                  hello@terelight.com
+                <a href="mailto:support@terelight.com" className="hover:opacity-100 transition-opacity">
+                  support@terelight.com
                 </a>
               </div>
               <div className="flex items-center gap-2">

@@ -46,21 +46,20 @@ const WhyChooseUs = () => {
           {reasons.map((reason, index) => (
             <div 
               key={index}
-              className="bg-card rounded-xl p-8 shadow-sm border border-border animate-slide-up"
+              className="group relative overflow-hidden bg-gradient-to-br from-card to-card/80 rounded-2xl p-8 shadow-lg border-2 border-border hover:border-primary/40 transition-all duration-300 animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
-              <div className="flex items-start gap-6">
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <reason.icon className="w-6 h-6 text-primary" />
+              <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-5 transition-opacity duration-300" />
+              <div className="relative">
+                <div className="w-16 h-16 bg-gradient-accent rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md">
+                  <reason.icon className="w-8 h-8 text-accent-foreground" />
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-card-foreground mb-2">
-                    {reason.title}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {reason.description}
-                  </p>
-                </div>
+                <h3 className="text-2xl font-bold text-card-foreground mb-3 group-hover:text-primary transition-colors">
+                  {reason.title}
+                </h3>
+                <p className="text-muted-foreground leading-relaxed text-base">
+                  {reason.description}
+                </p>
               </div>
             </div>
           ))}

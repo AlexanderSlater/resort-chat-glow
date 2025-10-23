@@ -348,8 +348,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <div className="font-semibold text-card-foreground mb-1">Email</div>
-                    <a href="mailto:hello@terelight.com" className="text-muted-foreground hover:text-accent transition-colors">
-                      hello@terelight.com
+                    <a href="mailto:support@terelight.com" className="text-muted-foreground hover:text-accent transition-colors">
+                      support@terelight.com
                     </a>
                   </div>
                 </div>

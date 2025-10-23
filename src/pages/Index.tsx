@@ -1,3 +1,4 @@
+import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import ProblemSection from "@/components/ProblemSection";
 import SolutionSection from "@/components/SolutionSection";
@@ -8,15 +9,18 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <main className="min-h-screen">
-      <Hero />
-      <ProblemSection />
-      <SolutionSection />
-      <WhyChooseUs />
-      <ResultsSection />
-      <ContactSection />
-      <Footer />
-    </main>
+    <>
+      <Header />
+      <main className="min-h-screen pt-[72px]">
+        <Hero />
+        <ProblemSection />
+        <SolutionSection />
+        <WhyChooseUs />
+        <ResultsSection />
+        <ContactSection />
+        <Footer />
+      </main>
+    </>
   );
 };
 
