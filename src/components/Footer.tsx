@@ -1,4 +1,6 @@
 import { Mail, MessageSquare } from "lucide-react";
+import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,7 +11,10 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <h3 className="text-2xl font-bold mb-3">ResortAI Concierge</h3>
+            <Link to="/" className="flex items-center gap-3 mb-3 hover:opacity-80 transition-opacity">
+              <img src={logo} alt="ResortAI Concierge Logo" className="w-10 h-10" />
+              <h3 className="text-2xl font-bold">ResortAI Concierge</h3>
+            </Link>
             <p className="opacity-90 text-sm">
               Premium AI chatbot solutions designed exclusively for luxury hotels and resorts.
             </p>

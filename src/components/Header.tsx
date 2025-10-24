@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import logo from "@/assets/logo.png";
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -20,12 +22,13 @@ const Header = () => {
       <nav className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <button 
-            onClick={scrollToTop}
-            className="text-2xl font-bold text-foreground hover:text-primary transition-colors"
+          <Link 
+            to="/"
+            className="flex items-center gap-3 text-2xl font-bold text-foreground hover:text-primary transition-colors"
           >
-            ResortAI Concierge
-          </button>
+            <img src={logo} alt="ResortAI Concierge Logo" className="w-10 h-10" />
+            <span>ResortAI Concierge</span>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
